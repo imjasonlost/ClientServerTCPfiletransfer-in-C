@@ -12,7 +12,7 @@
 
 //void read_operation(int client_socket, char *buf); for echo purpose reply from server
 void write_operation(int client_socket, char *buf, char *argv[]);
-void write_operation_simple(int client_socket, char *buf, char *argv[]);
+void write_operation_simple(int client_socket, char *buf);
 
 
 int main(int argc, char *argv[]) {
@@ -80,6 +80,21 @@ void write_operation(int client_socket, char *buf,char *argv[]){
                 exit(1);
             }   
 
+        
+
+    }
+}
+void write_operation_simple(int client_socket, char *buf){
+    while(1)
+    {    
+        printf("\nType Q or q to disconnect client\n");
+        fgets(buf, BUF_SIZE, stdin); 
+        if(!strcmp(buf,"q\n")|| !strcmp(buf,"Q\n")) {
+            shutdown(client_socket,SHUT_WR);
+            return;
+        }
+        
+           
         
 
     }
