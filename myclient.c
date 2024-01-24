@@ -30,15 +30,18 @@ int main(int argc, char *argv[]) {
     memset(&client_address,0,sizeof(client_address));
     client_address.sin_family=AF_INET;
     client_address.sin_addr.s_addr=inet_addr(argv[1]);
-    client_address.sin_port=ntons(atoi(argv[2]));
+    client_address.sin_port=htons(atoi(argv[2]));
     //connection to the server
-    if(connect(client_socket,(struct sockaddr*)&client_address,sizeof(client_address))==-1)
-                  perror("Connection  error!");
+    if(connect(client_socket,(struct sockaddr*)&client_address,sizeof(client_address))==-1) {
+       perror("Connection  error!");
+       exit(1);
+    }
+                 
     pid=fork();
     if(pid==0){ //if child is created
         if(argv[3]==0) {
-            write_operation_simple(client_socket,buf,argv);
-            exit(1);
+            write_operation_simple(client_socket,buf);
+            //exit(1);
         }
         if (argc==4)
        {
@@ -85,17 +88,17 @@ void write_operation(int client_socket, char *buf,char *argv[]){
     }
 }
 void write_operation_simple(int client_socket, char *buf){
-    while(1)
-    {    
+    
+      
         printf("\nType Q or q to disconnect client\n");
         fgets(buf, BUF_SIZE, stdin); 
         if(!strcmp(buf,"q\n")|| !strcmp(buf,"Q\n")) {
-            shutdown(client_socket,SHUT_WR);
-            return;
+            shutdown(client_socket, SHUT_WR);
+			return;
         }
         
            
         
 
-    }
+    
 }

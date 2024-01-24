@@ -61,8 +61,8 @@ while(1)
     if(client_socket==-1)
            continue;
     else 
-          puts("Client Connected to the Server & PID:");
-          printf("%d", getpid());
+          puts("Client Connected to the Server\n");
+          //printf("%d", getpid());
     pid=fork();
     if(pid==-1){
         close(client_socket);
@@ -79,7 +79,7 @@ while(1)
         }
         fclose(destination);
         close(client_socket);
-        puts("Client disconnected");
+        puts("Client disconnected\n");
         return 0;
     }
     else 
@@ -99,7 +99,7 @@ void read_childproc(int sig) {
 //defining signal function
 void signalhandler(int SIG){
     if(SIG==SIGINT || SIGTERM|| SIGQUIT) {
-        printf("Server Aborted: %d", SIG);
+        printf("\nServer Aborted: %d", SIG);
         exit(EXIT_FAILURE);
     }
 }
